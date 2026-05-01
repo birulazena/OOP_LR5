@@ -11,6 +11,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.containsString;
@@ -25,13 +26,14 @@ public class OpenWeatherClientTest {
 
     @BeforeEach
     void setUp() {
-        RestClient.Builder builder = RestClient.builder();
+        RestClient.Builder builder = RestClient.builder()
+                .defaultUriVariables(Map.of("apiKey", "test-api-key"));
+
         mockServer = MockRestServiceServer.bindTo(builder).build();
+
         RestClient restClient = builder.build();
 
         weatherClient = new OpenWeatherClient(restClient);
-
-        ReflectionTestUtils.setField(weatherClient, "apiKey", "test-key");
     }
 
     @Test
