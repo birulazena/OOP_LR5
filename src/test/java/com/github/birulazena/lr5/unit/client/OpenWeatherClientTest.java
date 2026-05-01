@@ -83,4 +83,9 @@ public class OpenWeatherClientTest {
         mockServer.verify();
     }
 
+    @Test
+    void shouldReturnOpenWeatherProviderType() {
+        assertEquals(WeatherProviderType.OPEN_WEATHER, weatherClient.getProviderType());
+    }
+
 }
