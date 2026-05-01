@@ -62,4 +62,21 @@ public class WeatherControllerTest {
         assertEquals(500, response.getCode());
         assertEquals("Database timeout", response.getMessage());
     }
+
+    @Test
+    void getCurrentWeatherByCity_ReturnsSuccessResponse() {
+        String city = "Minsk";
+        WeatherProviderType type = WeatherProviderType.GOOGLE_WEATHER;
+        BigDecimal lat = new BigDecimal("53.9006");
+        BigDecimal lon = new BigDecimal("27.5590");
+        CurrentWeather fakeWeather = new CurrentWeather();
+
+        when(weatherService.getCurrentWeather(city, type)).thenReturn(fakeWeather);
+
+        SuccessResponse<CurrentWeather> response = weatherController.getCurrentWeather(city, type);
+
+        assertEquals(200, response.getCode());
+        assertEquals("Success", response.getMessage());
+        assertEquals(fakeWeather, response.getData());
+    }
 }
