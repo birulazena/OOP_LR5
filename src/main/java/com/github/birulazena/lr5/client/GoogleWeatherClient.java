@@ -3,8 +3,6 @@ package com.github.birulazena.lr5.client;
 import com.github.birulazena.lr5.client.type.WeatherProviderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -15,39 +13,37 @@ import java.math.BigDecimal;
 
 @Component
 @RequiredArgsConstructor
-public class OpenWeatherClient implements WeatherDataClient {
+public class GoogleWeatherClient implements WeatherDataClient{
 
-    @Qualifier("openWeatherRestClient")
+    @Qualifier("googleWeatherRestClient")
     private final RestClient restClient;
 
     @Override
     public BigDecimal getCurrentTemperature(BigDecimal lat, BigDecimal lon) {
         var response = restClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/weather")
-                        .queryParam("appid", "{apiKey}")
-                        .queryParam("lat", lat.toString())
-                        .queryParam("lon", lon.toString())
-                        .queryParam("units", "metric")
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("key", "{apiKey}")
+                        .queryParam("location.latitude", lat.toString())
+                        .queryParam("location.longitude", lon.toString())
                         .build())
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
-                    throw new RuntimeException("openweather returned bad status: " + res.getStatusCode());
+                    throw new RuntimeException("googleweather returned bad status: " + res.getStatusCode());
                 })
                 .toEntity(String.class);
 
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(response.getBody());
-            JsonNode mainNode = rootNode.get("main");
+            JsonNode mainNode = rootNode.get("temperature");
 
-            if (mainNode == null || !mainNode.has("temp")) {
+            if (mainNode == null || !mainNode.has("degrees")) {
                 throw new RuntimeException("failed to decode response: missing temperature data");
             }
 
-            return new BigDecimal(mainNode.get("temp").asText());
+            return new BigDecimal(mainNode.get("degrees").asText());
         } catch (RuntimeException e) {
             throw e;
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -55,6 +51,6 @@ public class OpenWeatherClient implements WeatherDataClient {
 
     @Override
     public WeatherProviderType getProviderType() {
-        return WeatherProviderType.OPEN_WEATHER;
+        return WeatherProviderType.GOOGLE_WEATHER;
     }
 }
