@@ -1,5 +1,6 @@
 package com.github.birulazena.lr5.unit.client;
 
+import com.github.birulazena.lr5.client.WeatherClientFactory;
 import com.github.birulazena.lr5.client.WeatherDataClient;
 import com.github.birulazena.lr5.client.type.WeatherProviderType;
 import org.junit.jupiter.api.BeforeEach;
