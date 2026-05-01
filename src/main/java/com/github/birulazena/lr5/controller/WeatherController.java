@@ -1,5 +1,6 @@
 package com.github.birulazena.lr5.controller;
 
+import com.github.birulazena.lr5.client.type.WeatherProviderType;
 import com.github.birulazena.lr5.dto.StatusResponse;
 import com.github.birulazena.lr5.dto.SuccessResponse;
 import com.github.birulazena.lr5.model.CurrentWeather;
@@ -26,8 +27,10 @@ public class WeatherController {
     @Operation(summary = "Get Current Weather", description = "Returns current weather for given coordinates")
     public SuccessResponse<CurrentWeather> getCurrentWeather(
             @Parameter(description = "Latitude", required = true, example = "53.9006") @RequestParam BigDecimal lat,
-            @Parameter(description = "Longitude", required = true, example = "27.5590") @RequestParam BigDecimal lon) {
-        CurrentWeather result = service.getCurrentWeather(lat, lon);
+            @Parameter(description = "Longitude", required = true, example = "27.5590") @RequestParam BigDecimal lon,
+            @Parameter(description = "Weather client type", example = "GOOGLE_WEATHER")
+            @RequestParam(defaultValue = "OPEN_WEATHER") WeatherProviderType type) {
+        CurrentWeather result = service.getCurrentWeather(lat, lon, type);
         return new SuccessResponse<>(200, "Success", result);
     }
 
