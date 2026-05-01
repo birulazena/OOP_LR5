@@ -4,6 +4,7 @@ import com.github.birulazena.lr5.client.OpenWeatherClient;
 import com.github.birulazena.lr5.client.WeatherClientFactory;
 import com.github.birulazena.lr5.client.WeatherDataClient;
 import com.github.birulazena.lr5.client.type.WeatherProviderType;
+import com.github.birulazena.lr5.exception.CoordinatesNotFoundException;
 import com.github.birulazena.lr5.model.Coordinates;
 import com.github.birulazena.lr5.model.CurrentWeather;
 import com.github.birulazena.lr5.repository.WeatherRepository;
@@ -77,7 +78,7 @@ public class WeatherServiceTest {
         CurrentWeather result = weatherService.getCurrentWeather(city, type);
 
         assertNotNull(result);
-        assertEquals(result, expectedTemp);
+        assertEquals(result.getTemperature(), expectedTemp);
     }
 
     @Test

@@ -1,11 +1,13 @@
 package com.github.birulazena.lr5.repository;
 
 import com.github.birulazena.lr5.model.Coordinates;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
+@Component
 public class WeatherRepositoryImpl implements WeatherRepository {
 
     private static final Map<String, Coordinates> CITY_DATABASE = Map.of(
