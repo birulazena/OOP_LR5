@@ -1,5 +1,6 @@
 package com.github.birulazena.lr5.client;
 
+import com.github.birulazena.lr5.client.type.WeatherProviderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,5 +54,10 @@ public class OpenWeatherClient implements WeatherDataClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public WeatherProviderType getProviderType() {
+        return WeatherProviderType.OPEN_WEATHER;
     }
 }

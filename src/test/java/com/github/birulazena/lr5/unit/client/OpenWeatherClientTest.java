@@ -1,6 +1,7 @@
 package com.github.birulazena.lr5.unit.client;
 
 import com.github.birulazena.lr5.client.OpenWeatherClient;
+import com.github.birulazena.lr5.client.type.WeatherProviderType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
