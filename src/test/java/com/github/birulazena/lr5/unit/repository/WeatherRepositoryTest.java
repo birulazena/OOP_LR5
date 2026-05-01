@@ -1,9 +1,13 @@
 package com.github.birulazena.lr5.unit.repository;
 
+import com.github.birulazena.lr5.model.Coordinates;
+import com.github.birulazena.lr5.repository.WeatherRepository;
+import com.github.birulazena.lr5.repository.WeatherRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
