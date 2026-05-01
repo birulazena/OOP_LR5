@@ -1,5 +1,6 @@
 package com.github.birulazena.lr5.unit.controller;
 
+import com.github.birulazena.lr5.client.type.WeatherProviderType;
 import com.github.birulazena.lr5.controller.WeatherController;
 import com.github.birulazena.lr5.dto.StatusResponse;
 import com.github.birulazena.lr5.dto.SuccessResponse;
@@ -33,9 +34,9 @@ public class WeatherControllerTest {
         BigDecimal lon = new BigDecimal("27.5590");
         CurrentWeather fakeWeather = new CurrentWeather();
 
-        when(weatherService.getCurrentWeather(lat, lon)).thenReturn(fakeWeather);
+        when(weatherService.getCurrentWeather(lat, lon, WeatherProviderType.OPEN_WEATHER)).thenReturn(fakeWeather);
 
-        SuccessResponse<CurrentWeather> response = weatherController.getCurrentWeather(lat, lon);
+        SuccessResponse<CurrentWeather> response = weatherController.getCurrentWeather(lat, lon, WeatherProviderType.OPEN_WEATHER);
 
         assertEquals(200, response.getCode());
         assertEquals("Success", response.getMessage());
