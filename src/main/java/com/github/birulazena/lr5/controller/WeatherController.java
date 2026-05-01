@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class WeatherController {
     private final WeatherService service;
 
-    @GetMapping("/weather")
+    @GetMapping(value = "/weather", params = {"lat", "lon"})
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get Current Weather", description = "Returns current weather for given coordinates")
     public SuccessResponse<CurrentWeather> getCurrentWeather(
@@ -32,6 +32,20 @@ public class WeatherController {
             @RequestParam(defaultValue = "OPEN_WEATHER") WeatherProviderType type) {
         CurrentWeather result = service.getCurrentWeather(lat, lon, type);
         return new SuccessResponse<>(200, "Success", result);
+    }
+
+    @GetMapping(value = "/weather", params = "city")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get Current Weather By City", description = "Returns current weather for given city")
+    public SuccessResponse<CurrentWeather> getCurrentWeather(
+            @Parameter(description = "City", required = true, example = "Minsk")
+            @RequestParam String city,
+
+            @Parameter(description = "Weather Client Type", example = "GOOGLE_WEATHER")
+            @RequestParam(defaultValue = "OPEN_WEATHER") WeatherProviderType type) {
+
+        CurrentWeather result = service.getCurrentWeather(city, type);
+        return new SuccessResponse<>(200,  "Success", result);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
