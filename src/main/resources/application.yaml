@@ -17,3 +17,6 @@ app:
   openweather:
     base-url: ${OPENWEATHER_BASE_URL}
     api-key: ${OPENWEATHER_API_KEY}
+  googleweather:
+    base-url: ${GOOGLEWEATHER_BASE_URL}
+    api-key: ${GOOGLEWEATHER_API_KEY}

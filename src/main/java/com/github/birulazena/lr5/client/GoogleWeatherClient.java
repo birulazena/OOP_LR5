@@ -12,11 +12,13 @@ import tools.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 
 @Component
-@RequiredArgsConstructor
 public class GoogleWeatherClient implements WeatherDataClient{
 
-    @Qualifier("googleWeatherRestClient")
     private final RestClient restClient;
+
+    public GoogleWeatherClient(@Qualifier("googleWeatherRestClient") RestClient restClient) {
+        this.restClient = restClient;
+    }
 
     @Override
     public BigDecimal getCurrentTemperature(BigDecimal lat, BigDecimal lon) {

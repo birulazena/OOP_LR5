@@ -14,11 +14,13 @@ import tools.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 
 @Component
-@RequiredArgsConstructor
 public class OpenWeatherClient implements WeatherDataClient {
 
-    @Qualifier("openWeatherRestClient")
     private final RestClient restClient;
+
+    public OpenWeatherClient(@Qualifier("openWeatherRestClient") RestClient restClient) {
+        this.restClient = restClient;
+    }
 
     @Override
     public BigDecimal getCurrentTemperature(BigDecimal lat, BigDecimal lon) {
